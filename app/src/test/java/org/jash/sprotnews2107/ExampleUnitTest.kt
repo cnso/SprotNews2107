@@ -20,13 +20,22 @@ class ExampleUnitTest {
     @Test
     fun testNet() {
         val service = retrofit.create(NewsService::class.java)
-        val category = service.getAllCategory()
-        category
-            .subscribe ({
+//        val category = service.getAllCategory()
+//        category
+//            .subscribe ({
+//            if (it.code == 0) {
+//                it.data.forEach(::println)
+//            } else {
+//                println("网络出错")
+//            }
+//        }, {
+//            it.printStackTrace()
+//        })
+        service.getNewsByCategoryId(1, 1, 10).subscribe({
             if (it.code == 0) {
-                it.data.forEach(::println)
+                it.data.records.forEach(::println)
             } else {
-                println("网络出错")
+                println(it.msg)
             }
         }, {
             it.printStackTrace()

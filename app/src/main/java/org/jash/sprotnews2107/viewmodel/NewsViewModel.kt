@@ -10,7 +10,7 @@ class NewsViewModel:BaseViewModel() {
     val categoriesLiveData by lazy { MutableLiveData<List<Category>>() }
     val service by lazy { retrofit.create(NewsService::class.java) }
     fun loadCategory() {
-        service.getAllCategory().subscribe(
+        val disposable = service.getAllCategory().subscribe(
             {
                 if (it.code == 0) {
                     categoriesLiveData.postValue(it.data)
@@ -21,5 +21,6 @@ class NewsViewModel:BaseViewModel() {
                 errorLiveData.postValue(it.message)
             }
         )
+        addCloseable { disposable.takeIf { it.isDisposed }?.dispose() }
     }
 }
