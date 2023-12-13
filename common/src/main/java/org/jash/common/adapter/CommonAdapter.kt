@@ -26,5 +26,10 @@ class CommonAdapter<D>(val layoutId:Int, val variableId:Int, val listener:((d:D)
         data += list
         notifyItemRangeInserted(size, list.size)
     }
+    fun clear() {
+        val size = data.size
+        data.clear()
+        notifyItemRangeRemoved(0, size)
+    }
 }
 class CommonViewHolder(val binding: ViewDataBinding):ViewHolder(binding.root)
