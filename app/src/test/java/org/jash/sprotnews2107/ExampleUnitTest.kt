@@ -23,7 +23,7 @@ class ExampleUnitTest {
         val category = service.getAllCategory()
         category
             .subscribe ({
-            if (it.code == 200) {
+            if (it.code == 0) {
                 it.data.forEach(::println)
             } else {
                 println("网络出错")
@@ -31,6 +31,6 @@ class ExampleUnitTest {
         }, {
             it.printStackTrace()
         })
-//        Thread.sleep(2000)
+        Thread.sleep(2000)
     }
 }

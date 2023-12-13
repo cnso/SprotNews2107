@@ -25,9 +25,8 @@ private val gson by lazy {
 val retrofit by lazy {
     Retrofit.Builder()
         .client(client)
-        .baseUrl("http://10.161.9.80:7005/")
+        .baseUrl("http://10.161.9.80:7014/")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 }

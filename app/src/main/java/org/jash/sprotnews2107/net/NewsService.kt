@@ -6,6 +6,6 @@ import org.jash.sprotnews2107.entity.Res
 import retrofit2.http.GET
 
 interface NewsService {
-    @GET("/news/type")
+    @GET("/api/nt/all")
     fun getAllCategory():Observable<Res<List<Category>>>
 }
