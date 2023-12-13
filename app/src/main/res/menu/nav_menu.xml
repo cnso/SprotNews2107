@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:icon="@drawable/ic_home" android:title="新闻"/>
+    <item android:id="@+id/nav_video" android:icon="@drawable/ic_play" android:title="视频"/>
+    <item android:id="@null" android:icon="@null" android:title="@null" android:enabled="false"/>
+    <item android:id="@+id/nav_community" android:icon="@drawable/ic_brightness" android:title="社区"/>
+    <item android:id="@+id/nav_mine" android:icon="@drawable/ic_person" android:title=" 我的"/>
+</menu>
