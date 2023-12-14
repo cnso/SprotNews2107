@@ -28,7 +28,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryViewModel
     @Autowired
     @JvmField
     var id:Int = 0
-    val adapter by lazy { CommonAdapter<News>(R.layout.news_item, BR.news) }
+    val adapter by lazy { CommonAdapter<News>(R.layout.news_item, BR.news) {
+        ARouter.getInstance().build("/news/detail")
+            .withInt("id", it.id)
+            .navigation()
+    } }
     var page = 1
     val size = 10
     override fun initView() {

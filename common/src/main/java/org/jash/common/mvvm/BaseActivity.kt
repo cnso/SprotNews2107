@@ -2,6 +2,7 @@ package org.jash.common.mvvm
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -28,6 +29,13 @@ abstract class BaseActivity<B:ViewDataBinding, VM:BaseViewModel> : AppCompatActi
         viewModel.errorLiveData.observe(this, this::error)
         initView()
         initData()
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
+            finish()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
     abstract fun initView()
     abstract fun initData()
