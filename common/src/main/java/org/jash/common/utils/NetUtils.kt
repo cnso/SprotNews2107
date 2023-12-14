@@ -8,12 +8,20 @@ import org.jash.common.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+var token:String? = null
 
 private val client by lazy {
     val builder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+    }
+    builder.addInterceptor {
+        it.proceed(if (token == null) {
+            it.request()
+        } else {
+            it.request().newBuilder().addHeader("sn-token", token).build()
+        })
     }
     builder.build()
 }

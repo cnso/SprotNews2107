@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import org.jash.common.mvvm.BaseActivity
+import org.jash.common.utils.token
 import org.jash.sprotnews2107.R
 import org.jash.sprotnews2107.databinding.ActivityNewsBinding
 import org.jash.sprotnews2107.viewmodel.MainViewModel
@@ -14,6 +15,11 @@ import org.jash.sprotnews2107.viewmodel.MainViewModel
 class NewsActivity : BaseActivity<ActivityNewsBinding, MainViewModel>() {
     override fun initView() {
         binding.navMain.setOnItemSelectedListener {
+            if (token == null && it.itemId == R.id.nav_mine) {
+                ARouter.getInstance().build("/news/login")
+                    .navigation()
+                return@setOnItemSelectedListener false
+            }
             supportFragmentManager.beginTransaction()
                 .replace(R.id.content, ARouter.getInstance().build( when(it.itemId) {
                     R.id.nav_video -> "/news/video"
