@@ -15,6 +15,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding.login.setOnClickListener {
             viewModel.login(user)
         }
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun initData() {

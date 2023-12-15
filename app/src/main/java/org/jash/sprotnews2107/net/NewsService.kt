@@ -17,4 +17,6 @@ interface NewsService {
     fun getNewsByCategoryId(@Query("type") type:Int,@Query("page") page:Int,@Query("size") size:Int):Observable<Res<Page<News>>>
     @POST("/api/user/loginname")
     fun login(@Body user:Map<String, String>):Observable<Res<String>>
+    @GET("/api/user/loginout")
+    fun logout():Observable<Res<Any?>>
 }

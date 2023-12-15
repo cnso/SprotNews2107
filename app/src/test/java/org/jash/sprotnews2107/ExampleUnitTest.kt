@@ -42,4 +42,21 @@ class ExampleUnitTest {
         })
         Thread.sleep(2000)
     }
+    @Test
+    fun testStream() {
+        val map = (1..100).map { "item $it" }
+        map.forEach { println(it) }
+        val p1 = Person()
+        val p2 = Person()
+        val f = p1 + p2
+    }
 }
+class Person{
+    operator fun plus(p:Person):Family {
+        return Family(this, p)
+    }
+}
+class Family (
+    val husband:Person,
+    val wife:Person
+)
