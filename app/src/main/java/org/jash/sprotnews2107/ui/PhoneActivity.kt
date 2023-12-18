@@ -1,25 +1,26 @@
 package org.jash.sprotnews2107.ui
 
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import androidx.databinding.ObservableArrayMap
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import org.jash.common.mvvm.BaseActivity
 import org.jash.common.utils.logging
 import org.jash.common.utils.token
-import org.jash.sprotnews2107.databinding.ActivityLoginBinding
-import org.jash.sprotnews2107.viewmodel.LoginViewModel
-@Route(path = "/news/login")
-class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
+import org.jash.sprotnews2107.R
+import org.jash.sprotnews2107.databinding.ActivityPhoneBinding
+import org.jash.sprotnews2107.viewmodel.PhoneViewModel
+
+@Route(path = "/news/phone")
+class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
     val user = ObservableArrayMap<String, String>()
     override fun initView() {
         binding.user = user
         binding.login.setOnClickListener {
-            viewModel.login(user)
+            viewModel.loginForPhone(user)
         }
-        binding.phone.setOnClickListener {
-            ARouter.getInstance()
-                .build("/news/phone")
-                .navigation()
+        binding.getCode.setOnClickListener {
+            viewModel.getCode(user["phone"] ?: "")
         }
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -27,10 +28,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun initData() {
         viewModel.tokenLiveData.observe(this, this::login)
+        viewModel.codeLiveData.observe(this, this::code)
     }
     fun login(str:String) {
         token = str
         logging("token: $str")
         finish()
+    }
+    fun code(code:Int) {
+        user["code"] = code.toString()
     }
 }

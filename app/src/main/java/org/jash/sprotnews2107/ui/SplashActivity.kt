@@ -10,9 +10,11 @@ import android.widget.Toast
 import androidx.databinding.ObservableInt
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.youth.banner.indicator.CircleIndicator
 import org.jash.common.mvvm.BaseActivity
 import org.jash.common.utils.logging
 import org.jash.sprotnews2107.R
+import org.jash.sprotnews2107.adapter.SplashAdapter
 import org.jash.sprotnews2107.databinding.ActivitySplashBinding
 import org.jash.sprotnews2107.viewmodel.SplashViewModel
 
@@ -48,6 +50,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     }
     override fun initView() {
         binding.count = count
+        binding.banner.setAdapter(SplashAdapter(listOf(R.drawable.image_01, R.drawable.image_02, R.drawable.image_03)), false)
+        binding.banner.indicator = CircleIndicator(this)
+        binding.banner.start()
     }
 
     override fun initData() {
@@ -60,12 +65,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     fun progress(i:Int) {
         count.set(i)
-        if(i == 0) {
-            logging("跳转")
-            ARouter.getInstance().build("/news/main")
-                .navigation()
-            finish()
-        }
+//        if(i == 0) {
+//            logging("跳转")
+//            ARouter.getInstance().build("/news/main")
+//                .navigation()
+//            finish()
+//        }
     }
 
 }

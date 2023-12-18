@@ -42,6 +42,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{news.content}"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MaterialAlertDialog.Material3.Title.Text"
+                    android:text="@{`评论(` + news.comments + `)`}"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,5 +15,8 @@ data class News(
     val looks: Int,
     val ntid: Int,
     val suid: Int,
-    val title: String
+    val title: String,
+    val collects:Int,
+    val comments:Int,
+    val collected:Int
 )

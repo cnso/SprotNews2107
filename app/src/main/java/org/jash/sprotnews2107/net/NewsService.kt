@@ -19,4 +19,10 @@ interface NewsService {
     fun login(@Body user:Map<String, String>):Observable<Res<String>>
     @GET("/api/user/loginout")
     fun logout():Observable<Res<Any?>>
+    @GET("/api/news/detail")
+    fun getNewsDetail(@Query("id") id:Int):Observable<Res<News>>
+    @GET("/api/sms/sendlcode")
+    fun getLoginCode(@Query("phone") phone:String):Observable<Res<Int>>
+    @POST("/api/user/logincode")
+    fun loginForPhone(@Body user:Map<String, String>):Observable<Res<String>>
 }
