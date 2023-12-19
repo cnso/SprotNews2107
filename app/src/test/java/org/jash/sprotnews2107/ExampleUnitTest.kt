@@ -2,6 +2,7 @@ package org.jash.sprotnews2107
 
 import io.reactivex.schedulers.Schedulers
 import org.jash.common.utils.retrofit
+import org.jash.sprotnews2107.entity.User
 import org.jash.sprotnews2107.net.NewsService
 import org.junit.Test
 
@@ -31,32 +32,31 @@ class ExampleUnitTest {
 //        }, {
 //            it.printStackTrace()
 //        })
-        service.getNewsByCategoryId(1, 1, 10).subscribe({
-            if (it.code == 0) {
-                it.data.records.forEach(::println)
+//        service.getNewsByCategoryId(1, 1, 10).subscribe({
+//            if (it.code == 0) {
+//                it.data.records.forEach(::println)
+//            } else {
+//                println(it.msg)
+//            }
+//        }, {
+//            it.printStackTrace()
+//        })
+        service.getUserAll1().zipWith(service.getUserAll2()) { r1, r2 ->
+            if (r1.code == 0 && r2.code == 0) {
+                r1.data.zip(r2.data) { u1, u2 ->
+                    User(u1.birthday ?: u2.birthday, u1.createTime, Math.max(u1.flag, u2.flag), u1.id, u1.imgurl ?: u2.imgurl, u1.info ?: u2.info, u1.password ?: u2.password, u1.phone ?:u2.phone, u1.sex ?: u2.sex, u1.username ?: u2.username)
+                }
             } else {
-                println(it.msg)
+                listOf<User>()
             }
-        }, {
+        }.subscribe({
+                it.forEach(::println)
+        },{
             it.printStackTrace()
         })
+
         Thread.sleep(2000)
     }
-    @Test
-    fun testStream() {
-        val map = (1..100).map { "item $it" }
-        map.forEach { println(it) }
-        val p1 = Person()
-        val p2 = Person()
-        val f = p1 + p2
-    }
+
 }
-class Person{
-    operator fun plus(p:Person):Family {
-        return Family(this, p)
-    }
-}
-class Family (
-    val husband:Person,
-    val wife:Person
-)
+

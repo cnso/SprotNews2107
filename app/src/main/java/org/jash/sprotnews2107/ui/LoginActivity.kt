@@ -10,7 +10,10 @@ import org.jash.sprotnews2107.databinding.ActivityLoginBinding
 import org.jash.sprotnews2107.viewmodel.LoginViewModel
 @Route(path = "/news/login")
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
-    val user = ObservableArrayMap<String, String>()
+    val user = ObservableArrayMap<String, String>().apply {
+        put("name", "qqqq")
+        put("password", "1111")
+    }
     override fun initView() {
         binding.user = user
         binding.login.setOnClickListener {
