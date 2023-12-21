@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="comment"
+            type="org.jash.sprotnews2107.entity.Comment" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:roundAsCircle="true"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:failureImage="@mipmap/ic_launcher"
+            android:imageURI="@{comment.user.imgurl}"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:textColor="#2962FF"
+            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:text="@{ comment.user.username }"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/content"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:text="@{ comment.content }"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/publish_time"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            android:text="@{ comment.timeString }"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/replay"
+            android:textColor="#2962FF"
+            app:layout_constraintStart_toEndOf="@id/publish_time"
+            app:layout_constraintTop_toTopOf="@id/publish_time"
+            android:text="回复"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/publish_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:background="@drawable/replays_bg"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:visibility="@{comment.replays.size() == 0 ? View.GONE : View.VISIBLE}">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@{ comment.replays[0].replayContent }" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="@{comment.replays.size() > 1 ? View.VISIBLE : View.GONE}"
+                android:text="@{ comment.replays[1].replayContent }" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#2962FF"
+                android:visibility="@{comment.replays.size() > 2 ? View.VISIBLE : View.GONE}"
+                android:id="@+id/open_detail"
+                android:text="@{ `全部` + comment.replays.size() + `条评论>` }" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

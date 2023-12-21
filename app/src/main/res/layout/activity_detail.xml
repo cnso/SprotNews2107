@@ -54,6 +54,11 @@
                     android:layout_height="wrap_content"
                     style="@style/MaterialAlertDialog.Material3.Title.Text"
                     android:text="@{`评论(` + news.comments + `)`}"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
         <LinearLayout

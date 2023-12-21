@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class CommonAdapter<D>(val layoutId:Int, val variableId:Int, val listener:((d:D) ->Unit)? = null):Adapter<CommonViewHolder>() {
+open class CommonAdapter<D>(val layoutId:Int, val variableId:Int, val listener:((d:D) ->Unit)? = null):Adapter<CommonViewHolder>() {
     val data = mutableListOf<D>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommonViewHolder =
         CommonViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false))

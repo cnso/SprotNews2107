@@ -20,6 +20,7 @@ class DetailViewModel(newsDatabase: NewsDatabase):BaseViewModel() {
     val collectLiveData by lazy{ MutableLiveData<List<News>>() }
     val collectedLiveData by lazy{ MutableLiveData<String>() }
     val postCommentLiveData by lazy{ MutableLiveData<Boolean>() }
+    val commentLiveData by lazy{ MutableLiveData<List<Comment>>() }
     init {
         newsDao = newsDatabase.getNewsDao()
         userDao = newsDatabase.getUserDao()
@@ -81,7 +82,7 @@ class DetailViewModel(newsDatabase: NewsDatabase):BaseViewModel() {
         addCloseable { disposable1.takeIf { it.isDisposed }?.dispose() }
     }
     fun updateUser() {
-        val disposable = service.getUserAll1().zipWith(service.getUserAll2()) { r1, r2 ->
+        val list = service.getUserAll1().zipWith(service.getUserAll2()) { r1, r2 ->
             if (r1.code == 0 && r2.code == 0) {
                 r1.data.zip(r2.data) { u1, u2 ->
                     User(
@@ -100,11 +101,28 @@ class DetailViewModel(newsDatabase: NewsDatabase):BaseViewModel() {
             } else {
                 listOf<User>()
             }
-        }.subscribe({
-            userDao.save(*it.toTypedArray())
+        }.blockingFirst()
+        userDao.save(*list.toTypedArray())
+    }
+    fun loadComment(nid:Int){
+        val disposable1 = service.getCommentByNid(nid).subscribe({
+            if (it.code == 0) {
+                updateUser()
+                it.data.forEach { comment ->
+                    comment.user = userDao.findById(comment.uid).blockingFirst()
+                    comment.replays?.let {replays ->
+                        replays.forEach { replay ->
+                            replay.user = userDao.findById(replay.uid).blockingFirst()
+                        }
+                    }
+                }
+                commentLiveData.postValue(it.data)
+            } else {
+                errorLiveData.postValue(it.msg)
+            }
         }, {
-            it.printStackTrace()
+            errorLiveData.postValue(it.message)
         })
-        addCloseable { disposable.takeIf { it.isDisposed }?.dispose() }
+        addCloseable { disposable1.takeIf { it.isDisposed }?.dispose() }
     }
 }
