@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import org.jash.common.adapter.CommonAdapter
+import org.jash.common.mvvm.BaseFragment
 import org.jash.sprotnews2107.R
+import org.jash.sprotnews2107.BR
+import org.jash.sprotnews2107.databinding.FragmentVideoBinding
+import org.jash.sprotnews2107.entity.Page
+import org.jash.sprotnews2107.entity.Video
+import org.jash.sprotnews2107.viewmodel.VideoViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -19,44 +22,18 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Route(path = "/news/video")
-class VideoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+class VideoFragment : BaseFragment<FragmentVideoBinding, VideoViewModel>() {
+    val adapter by lazy {CommonAdapter<Video>(R.layout.video_item, BR.video)}
+    override fun initView() {
+        binding.recycler.adapter = adapter
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_video, container, false)
+    override fun initData() {
+        viewModel.videoLiveData.observe(this, this::loaded)
+        viewModel.loadVideo(1, 10)
+    }
+    fun loaded(page:Page<Video>) {
+        adapter += page.records
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment VideoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VideoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

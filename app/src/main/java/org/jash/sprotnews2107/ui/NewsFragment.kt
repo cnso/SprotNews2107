@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.tabs.TabLayoutMediator
 import org.jash.common.mvvm.BaseActivity
 import org.jash.common.mvvm.BaseFragment
@@ -28,6 +29,13 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
         TabLayoutMediator(binding.tab, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()
+        binding.search.editText.setOnEditorActionListener { v, _, _ ->
+            ARouter.getInstance()
+                .build("/news/search")
+                .withString("key", v.text.toString())
+                .navigation()
+            true
+        }
     }
 
     override fun initData() {

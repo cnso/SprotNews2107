@@ -7,6 +7,7 @@ import org.jash.sprotnews2107.entity.News
 import org.jash.sprotnews2107.entity.Page
 import org.jash.sprotnews2107.entity.Res
 import org.jash.sprotnews2107.entity.User
+import org.jash.sprotnews2107.entity.Video
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -39,4 +40,7 @@ interface NewsService {
     fun getUserAll2():Observable<Res<List<User>>>
     @GET("/api/newsComment/comments")
     fun getCommentByNid(@Query("nid") nid:Int):Observable<Res<List<Comment>>>
+    @GET("/api/video/page?order=id")
+    fun getVideo(@Query("page") page:Int,@Query("size") size:Int):Observable<Res<Page<Video>>>
+
 }

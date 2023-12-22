@@ -12,4 +12,6 @@ interface NewsDao {
     fun findById(id:Int):Observable<News>
     @Upsert
     fun save(vararg news:News)
+    @Query("select * from news where title like :key ")
+    fun search(key:String):Observable<List<News>>
 }

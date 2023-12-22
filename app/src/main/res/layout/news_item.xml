@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/title"
             style="@style/MaterialAlertDialog.Material3.Title.Text"
-            android:text="@{news.title}"
+            android:text="@{news.heightTitle ?? news.title}"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
